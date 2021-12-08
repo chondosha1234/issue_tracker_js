@@ -1,0 +1,69 @@
+body {
+  background-color: #121212;
+}
+
+h3 {
+  color: white;
+}
+
+.center {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  height: 30%;
+  width: 30%;
+  padding: 25px;
+  text-align: center;
+  background-color: #343a40;
+  border: 1px solid black;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.center-issue {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  height: 40%;
+  width: 30%;
+  padding: 25px;
+  text-align: center;
+  background-color: #343a40;
+  border: 1px solid black;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.createaccount {
+  margin: 15px;
+  color: white;
+  font-size: 14px;
+}
+
+.form-control {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+  margin-left: 25%;
+}
+
+
+.login-btn {
+  margin: 5px;
+}
+
+.register {
+  color: white;
+}
+
+.register:hover {
+  color: #121212;
+}
+
+.create-btn {
+  margin: 5px;
+  margin-bottom: 10px;
+}
+
+.date-message {
+  color: white;
+  font-size: 12px;
+}

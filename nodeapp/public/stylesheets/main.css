@@ -1,0 +1,81 @@
+h3 {
+  margin: 8px;
+  margin-left: 20%;
+  padding: 6px;
+  background-color: #343a40;
+  border-radius: 25px;
+}
+
+h2 {
+  padding: 6px;
+  margin-top: 16px;
+  background-color: #343a40;
+}
+
+.main-container {
+  display: block;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.home-info {
+  margin: 16px;
+  margin-left: 5%;
+}
+
+.home-issue-info {
+  margin: 16px;
+}
+
+.home-actions {
+  margin: 20px;
+  margin-left: 20%;
+}
+
+.create-btn {
+  background-color: #121212;
+}
+
+.create-btn:hover {
+  background-color: black;
+}
+
+.create-link {
+  color: white;
+  text-decoration: none;
+}
+
+.create-link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.issue-list-item {
+  font-size: 14px;
+  padding: 12px;
+  margin-right: 16px;
+  border-bottom: 1px solid black;
+  background-color: #343a40;
+  border-radius: 25px;
+}
+
+.issue-list {
+  list-style-type: none;
+}
+
+.issue-list-link {
+  color: white;
+  font-size: 14px;
+}
+
+.issue-list-link:hover{
+  color: red;
+}
+
+.issue-status-open {
+  color: green;
+}
+
+.issue-status-closed {
+  color: red;
+}

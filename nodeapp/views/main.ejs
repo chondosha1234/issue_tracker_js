@@ -1,0 +1,70 @@
+<%- include('partials/base'); %>
+
+<link rel="stylesheet" href="/stylesheets/main.css"/>
+
+<div class="body-container">
+  <div class="main-container">
+
+    <div class="home-info">
+      <h3>Username: <%= username %></h3>
+      <% if (assigned_issue) { %>
+      <p class="home-issue-info">Issue ID: <%= assigned_issue %></p>
+      <% } else { %>
+      <p class="home-issue-info">No Issue Assigned Right Now!</p>
+      <% } %>
+
+      <br>
+      <p class="home-user-info">Your Email: <%= email %></p>
+      <p class="home-user-info">Your Role: <%= person_role %></p>
+      <p class="home-user-info">User Created: <%= created_on %></p>
+      <p class="home-user-info">Last Modified on: <%= modified_on %></p>
+    </div>
+
+    <br>
+
+    <div class="home-actions">
+      <button class="create-btn">
+        <a class="create-link" href="/home/projects/create_project">Create Project</a>
+      </button>
+      <button class="create-btn">
+        <a class="create-link" href="/home/issues/create_issue">Create Issue</a>
+      </button>
+      <button class="create-btn">
+        <a class="create-link" href="/home/">Update Current Issue</a>
+      </button>
+      <% if (person_role == "Admin") { %>
+      <button class="create-btn">
+        <a class="create-link" href="/home/issue/assign_issue">Assign Issue</a>
+      </button>
+      <button class="create-btn">
+        <a class="create-link" href="/home">Close Issue</a>
+      </button>
+      <button class="create-btn">
+        <a class="create-link" href="/home">Finish Project</a>
+      </button>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="sidebar-container">
+    <div class="issue-container">
+      <h3>Recent Issues</h3>
+      <ul class="issue-list">
+        <% for (let i = 0; i < issues.length; i++){ %>
+          <li class="issue-list-item">
+            <p>Issue ID: <%= issues[i].issue_id %>
+            <a class="issue-list-link" href="/home/projects/issue_detail/<%=issues[i].issue_id%>">
+            <%= issues[i].issue_summary %>
+            </a></p>
+            <% if (issues[i].issue_status == "Open"){ %>
+            <p class="issue-status-open">Status: <%= issues[i].issue_status %></p>
+            <% } else { %>
+            <p class="issue-status-close">Status: <%= issues[i].issue_status %></p>
+            <% } %>
+          </li>
+          <br>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</div>

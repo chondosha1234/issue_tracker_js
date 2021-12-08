@@ -1,0 +1,49 @@
+<%- include("partials/base"); %>
+
+<link rel="stylesheet" href="/stylesheets/projects.css" />
+
+<div class="body-container">
+
+  <div class="main-container">
+    <h2>Projects</h2>
+    <br>
+    <ul class="project-list">
+      <% for (let i = 0; i < projects.length; i++){ %>
+        <li class="project-list-item">
+          <p>
+          <a class="project-list-link" href="/home/projects/project_detail/<%=projects[i].project_id%>">
+          <%= projects[i].project_name %> :
+          </a>
+          Created by: <%= projects[i].created_by %>
+          </p>
+          <p class="project-list-dates">Created On: <%= projects[i].created_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+          <p class="project-list-dates">Modified On: <%= projects[i].modified_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+        </li>
+        <br>
+      <% } %>
+    </ul>
+  </div>
+
+  <div class="sidebar-container">
+    <div class="issue-container">
+      <h3>Recent Issues</h3>
+      <ul class="issue-list">
+        <% for (let i = 0; i < issues.length; i++){ %>
+          <li class="issue-list-item">
+            <p>Issue ID: <%= issues[i].issue_id %>
+            <a class="issue-list-link" href="/home/projects/issue_detail/<%=issues[i].issue_id%>">
+            <%= issues[i].issue_summary %>
+            </a></p>
+            <% if (issues[i].issue_status == "Open"){ %>
+            <p class="issue-status-open">Status: <%= issues[i].issue_status %></p>
+            <% } else { %>
+            <p class="issue-status-close">Status: <%= issues[i].issue_status %></p>
+            <% } %>
+          </li>
+          <br>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+
+</div>

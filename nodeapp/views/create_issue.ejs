@@ -1,0 +1,20 @@
+<%- include('partials/base'); %>
+
+<link rel="stylesheet" href="/stylesheets/login.css" />
+
+<div class="body-container">
+ <div class="center-issue">
+  <h3>Enter Issue Information</h3>
+  <br>
+  <form method="POST" action="/home/issues">
+    <div class="form-group">
+      <input name="project_name" type="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
+      <input name="username" type="username" class="form-control" id="username" placeholder="Username" required>
+      <input name="summary" type="summary" class="form-control" id="summary" placeholder="Issue Summary" required>
+      <input name="id_date" type="id_date" class="form-control" id="id_date" placeholder="Current Date" required>
+      <p class="date-message">(Date format YYYY-MM-DD)</p>
+    </div>
+    <button class="create-btn" type="submit">Create</button>
+  </form>
+ </div>
+</div>
