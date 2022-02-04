@@ -78,21 +78,21 @@ module.exports = {
   },
 
   getUser:function(req, res){
-    const user = person_model.getUser(req.body.username);  //not sure about this
+    const user = await person_model.getUser(req.body.username);  //not sure about this
     res.send("user_info", {
       user: user,
     });
   },
 
   getProject:function(req,res){
-    const project = project_model.getProject(req.body.project_id); // not sure
+    const project = await project_model.getProject(req.body.project_id); // not sure
     res.send("project_detail", {
       project: project,
     });
   },
 
   getIssue:function(req, res){
-    const issue = issue_model.getIssue(req.body.issue_id);
+    const issue = await issue_model.getIssue(req.body.issue_id);
     res.send("issue_detail", {
       issue: issue,
     });
@@ -134,21 +134,21 @@ module.exports = {
   },
 
   showAllIssues:function(req,res){
-    const issues = issue_model.showAllIssues(req.body.project_id);
+    const issues = await issue_model.showAllIssues(req.body.project_id);
     res.render("issues", {
       issues: issues
     });
   },
 
   showOpenIssues:function(req,res){
-    const issues = issue_model.showOpenIssues(req.body.project_id);
+    const issues = await issue_model.showOpenIssues(req.body.project_id);
     res.render("issues", {
       issues: issues
     });
   },
 
   showOverdueIssues:function(req,res){
-    const issues = issue_model.showOverdueIssues(req.body.project_id);
+    const issues = await issue_model.showOverdueIssues(req.body.project_id);
     res.render("issues", {
       issues: issues
     });

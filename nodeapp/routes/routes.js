@@ -22,6 +22,9 @@ router.post('/home/issues', function_controller.createIssue);
 router.get('/home/issues/assign_issue', page_controller.assign_issue);
 router.post('/home/issues/assign_issue', function_controller.assignIssue);    //check to see if works
 router.get('/home/issues/issue_detail', page_controller.issue_detail);
+router.get('/home/issues/overdue_issues', function_controller.showOverdueIssues);
+router.get('/home/issues/open_issues', function_controller.showOpenIssues);
+router.get('/home/issues/all_issues', function_controller.showAllIssues);
 
 router.get('/home/reports', page_controller.reports);
 router.get('/home/dashboard', page_controller.dashboard);

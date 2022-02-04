@@ -102,16 +102,19 @@ module.exports = {
 
   // get overdue issues by project
   async showOverdueIssues(project_id){
-    try {
-      conn = await pool.getConnection();
-      let date = new Date().toISOString().slice(0, 10).replace("T", " ");
-      sql = "SELECT * FROM Issues WHERE related_project = ? AND target_date < ?";
-      let rows = await conn.query(sql, [project_id, date]);
-      conn.release();
-      return rows;
-    }catch (err){
-      throw err;
-    }
+    return new Promise(async function(res, rej){
+      try {
+        conn = await pool.getConnection();
+        let date = new Date().toISOString().slice(0, 10).replace("T", " ");
+        sql = "SELECT * FROM Issues WHERE related_project = ? AND target_date < ?";
+        await conn.query(sql, [project_id, date], function(err, results, fields){
+          res(results);
+        });
+        conn.release();
+      }catch (err){
+        rej(err);
+      }
+    });
   },
 
   //Show some recent issues from different projects when user
