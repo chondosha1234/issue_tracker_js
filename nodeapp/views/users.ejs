@@ -5,11 +5,24 @@
 <div class="body-container">
 
   <div class="main-container">
-
+    <h2> User List </h2>
+    <br>
+    <ul class ="user-list">
+      <% for (let i = 0; i < users.length; i++){ %>
+      <li class="user-list-item">
+        <p>
+          <a class="user-info-link" href="/home/users/user_info/<%= users[i].username %>">
+            <%= users[i].username %>
+          </a>
+        </p>
+        <p class="user-date"> Created On: <%= users[i].created_on %> </p>
+      </li>
+      <% } %>
+    </ul>
   </div>
 
   <div class="sidebar-container">
-    
+
   </div>
 
 </div>
