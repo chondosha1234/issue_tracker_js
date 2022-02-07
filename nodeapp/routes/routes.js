@@ -14,7 +14,7 @@ router.post('/home/projects', function_controller.createProject);
 router.get('/home/projects/project_detail/:id', page_controller.project_detail);
 
 router.get('/home/users', page_controller.users);
-router.get('/home/users/user_info', page_controller.user_info);
+router.get('/home/users/user_info/:username', page_controller.user_info);
 
 router.get('/home/issues', page_controller.issues);
 router.get('/home/issues/create_issue', page_controller.create_issue);
