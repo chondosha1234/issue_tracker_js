@@ -31,7 +31,7 @@ module.exports = {
   async listUsers(){
     return new Promise(async function(res, rej){
       try{
-        conn = pool.getConnection();
+        conn = await pool.getConnection();
         sql = "SELECT person_id,username,email,role FROM People";
         await conn.query(sql, [], function(err, results, fields){
           res(results);

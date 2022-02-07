@@ -89,15 +89,17 @@ module.exports = {
 
   //get all opened issues from project
   async showOpenIssues(project_id){
-    try {
-      conn = await pool.getConnection();
-      sql = "SELECT * FROM Issues WHERE related_project = ? AND issue_status = 'open'";
-      let rows = await conn.query(sql, [project_id]);
-      conn.release();
-      return rows;
-    }catch (err){
-      throw err;
-    }
+    return new Promise(async function(res, rej){
+      try {
+        conn = await pool.getConnection();
+        sql = "SELECT * FROM Issues WHERE related_project = ? AND issue_status = 'open'";
+        await conn.query(sql, [project_id], function(err, results, fields){
+          res(results);
+        });
+      }catch (err){
+        rej(err);
+      }
+    });
   },
 
   // get overdue issues by project
