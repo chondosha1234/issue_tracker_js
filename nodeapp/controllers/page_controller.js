@@ -34,8 +34,11 @@ module.exports = {
     });
   },
 
-  project_detail:function(req,res){
-    res.render("project_detail");
+  project_detail:async function(req,res){
+    const project = await project_model.getProjectById(req.params.id);
+    res.render("project_detail", {
+      project: project
+    });
   },
 
   users:async function(req,res){
@@ -47,8 +50,11 @@ module.exports = {
     });
   },
 
-  user_info:function(req,res){
-    res.render("user_info");
+  user_info:async function(req,res){
+    const user = await person_model.getUser(req.params.username);
+    res.render("user_info", {
+      user: user
+    });
   },
 
   issues:async function(req,res){
