@@ -38,8 +38,13 @@ module.exports = {
     res.render("project_detail");
   },
 
-  users:function(req,res){
-    res.render("users");
+  users:async function(req,res){
+    const users = await person_model.listUsers();
+    const issues = await issue_model.showRecentIssues();
+    res.render("users", {
+      users: users,
+      issues: issues
+    });
   },
 
   user_info:function(req,res){
