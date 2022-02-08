@@ -6,15 +6,10 @@ const auth = require("../utils/auth");
 module.exports = {
 
   home:async function(req,res){
-    user_data = await person_model.getUser(req.session.username);
+    user = await person_model.getUser(req.session.username);
     issues = await issue_model.showRecentIssues();
     res.render("main", {
-      username: user_data.username,
-      email: user_data.email,
-      person_role: user_data.person_role,
-      assigned_issue: user_data.assign_issue,
-      created_on: user_data.created_on.toISOString().slice(0, 10).replace('T', ' '),
-      modified_on: user_data.modified_on.toISOString().slice(0, 10).replace('T', ' '),
+      user: user,
       issues: issues
     });
   },
@@ -83,6 +78,10 @@ module.exports = {
 
   close_issue: async function(req,res){
     res.render("close_issue");
+  },
+
+  update_issue: async function(req,res){
+    res.render("update_issue");
   },
 
   assign_issue:function(req,res){

@@ -9,16 +9,11 @@ module.exports = {
   loginFunction:async function(req, res){
     areValid = await person_model.areValidCredentials(req.body.username, req.body.password);
     if (areValid){
-      user_data = await person_model.getUser(req.body.username);
+      user = await person_model.getUser(req.body.username);
       issues = await issue_model.showRecentIssues();
       req.session.username = req.body.username;
       res.render("main", {
-        username: user_data.username,
-        email: user_data.email,
-        person_role: user_data.person_role,
-        assigned_issue: user_data.assign_issue,
-        created_on: user_data.created_on.toISOString().slice(0, 10).replace('T', ' '),
-        modified_on: user_data.modified_on.toISOString().slice(0, 10).replace('T', ' '),
+        user: user,
         issues: issues
       });
       console.log("login successful");
