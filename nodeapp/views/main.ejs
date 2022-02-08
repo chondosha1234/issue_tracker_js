@@ -6,18 +6,18 @@
   <div class="main-container">
 
     <div class="home-info">
-      <h3>Username: <%= username %></h3>
-      <% if (assigned_issue) { %>
-      <p class="home-issue-info">Issue ID: <%= assigned_issue %></p>
+      <h3>Username: <%= user.username %></h3>
+      <% if (user.assigned_issue) { %>
+      <p class="home-issue-info">Issue ID: <%= user.assigned_issue %></p>
       <% } else { %>
       <p class="home-issue-info">No Issue Assigned Right Now!</p>
       <% } %>
 
       <br>
-      <p class="home-user-info">Your Email: <%= email %></p>
-      <p class="home-user-info">Your Role: <%= person_role %></p>
-      <p class="home-user-info">User Created: <%= created_on %></p>
-      <p class="home-user-info">Last Modified on: <%= modified_on %></p>
+      <p class="home-user-info">Your Email: <%= user.email %></p>
+      <p class="home-user-info">Your Role: <%= user.person_role %></p>
+      <p class="home-user-info">User Created: <%= user.created_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+      <p class="home-user-info">Last Modified on: <%= user.modified_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
     </div>
 
     <br>
@@ -32,7 +32,7 @@
       <button class="create-btn">
         <a class="create-link" href="/home/update_issue">Update Current Issue</a>
       </button>
-      <% if (person_role == "Admin") { %>
+      <% if (user.person_role == "Admin") { %>
       <button class="create-btn">
         <a class="create-link" href="/home/issue/assign_issue">Assign Issue</a>
       </button>
