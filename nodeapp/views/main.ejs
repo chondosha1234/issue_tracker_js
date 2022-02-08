@@ -30,17 +30,17 @@
         <a class="create-link" href="/home/issues/create_issue">Create Issue</a>
       </button>
       <button class="create-btn">
-        <a class="create-link" href="/home/">Update Current Issue</a>
+        <a class="create-link" href="/home/update_issue">Update Current Issue</a>
       </button>
       <% if (person_role == "Admin") { %>
       <button class="create-btn">
         <a class="create-link" href="/home/issue/assign_issue">Assign Issue</a>
       </button>
       <button class="create-btn">
-        <a class="create-link" href="/home">Close Issue</a>
+        <a class="create-link" href="/home/issue/close_issue">Close Issue</a>
       </button>
       <button class="create-btn">
-        <a class="create-link" href="/home">Finish Project</a>
+        <a class="create-link" href="/home/project/finish_project">Finish Project</a>
       </button>
       <% } %>
     </div>
