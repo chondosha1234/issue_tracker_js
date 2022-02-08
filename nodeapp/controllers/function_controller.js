@@ -30,6 +30,8 @@ module.exports = {
     }
   },
 
+//functions for users
+
   createPerson:async function(req, res){
     const name = req.body.name;
     const username = req.body.username;
@@ -44,6 +46,42 @@ module.exports = {
     }
     res.render("login");
   },
+
+  getUser:async function(req, res){
+    const user = await person_model.getUser(req.body.username);  //not sure about this
+    res.send("user_info", {
+      user: user,
+    });
+  },
+
+//section for functions related to projects
+
+  createProject:async function(req, res){
+    const project_name = req.body.project_name;
+    const target_end_date = req.body.target_end_date;
+    const username = req.body.username;
+    project_model.createProject(project_name, target_end_date, username);
+    const projects = await project_model.showRecentProjects();
+    res.render("projects", {
+      projects: projects
+    });
+  },
+
+  finishProject:async function(req,res){
+    const project = await project_model.getProjectByName(req.body.project_name);
+    await project_model.finishProject(project.project_id);
+    res.render("main");
+  },
+
+  getProject:async function(req,res){
+    const project = await project_model.getProject(req.body.project_id); // not sure
+    res.send("project_detail", {
+      project: project,
+    });
+  },
+
+
+// section for functions related to issues
 
   createIssue:async function(req, res){
     const username = req.body.username;
@@ -63,31 +101,6 @@ module.exports = {
       project: project,
       projects: projects,
       issues: issues
-    });
-  },
-
-  createProject:async function(req, res){
-    const project_name = req.body.project_name;
-    const target_end_date = req.body.target_end_date;
-    const username = req.body.username;
-    project_model.createProject(project_name, target_end_date, username);
-    const projects = await project_model.showRecentProjects();
-    res.render("projects", {
-      projects: projects
-    });
-  },
-
-  getUser:async function(req, res){
-    const user = await person_model.getUser(req.body.username);  //not sure about this
-    res.send("user_info", {
-      user: user,
-    });
-  },
-
-  getProject:async function(req,res){
-    const project = await project_model.getProject(req.body.project_id); // not sure
-    res.send("project_detail", {
-      project: project,
     });
   },
 
@@ -116,6 +129,10 @@ module.exports = {
     })
   },
 
+  updateIssue:async function(req,res){
+    res.render("issues");
+  },
+
   closeIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
     await issue_model.closeIssue(req.body.issue_id);
@@ -125,12 +142,6 @@ module.exports = {
       issues: issues,
       project: project
     })
-  },
-
-  finishProject:async function(req,res){
-    const project = await project_model.getProjectByName(req.body.project_name);
-    await project_model.finishProject(project.project_id);
-    res.render("main");
   },
 
   showAllIssues:async function(req,res){

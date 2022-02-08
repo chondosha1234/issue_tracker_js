@@ -41,6 +41,10 @@ module.exports = {
     });
   },
 
+  finish_project: async function(req,res){
+    res.render("finish_project");
+  },
+
   users:async function(req,res){
     const users = await person_model.listUsers();
     const issues = await issue_model.showRecentIssues();
@@ -52,8 +56,10 @@ module.exports = {
 
   user_info:async function(req,res){
     const user = await person_model.getUser(req.params.username);
+    const issues = await issue_model.showRecentIssues();
     res.render("user_info", {
-      user: user
+      user: user,
+      issues: issues
     });
   },
 
@@ -61,22 +67,26 @@ module.exports = {
     const issues = await issue_model.showRecentIssues();
     const projects = await project_model.showRecentProjects();
     res.render("issues", {
-      project: null,
+      project: null, //because its using projects css template
       projects: projects,
       issues: issues
     });
+  },
+
+  issue_detail:function(req,res){
+    res.render("issue_detail");
   },
 
   create_issue:function(req,res){
     res.render("create_issue");
   },
 
-  assign_issue:function(req,res){
-    res.render("assign_issue");
+  close_issue: async function(req,res){
+    res.render("close_issue");
   },
 
-  issue_detail:function(req,res){
-    res.render("issue_detail");
+  assign_issue:function(req,res){
+    res.render("assign_issue");
   },
 
   reports:function(req,res){
