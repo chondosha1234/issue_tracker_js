@@ -5,12 +5,12 @@
   margin-top: 50px;
   color: white;
   background-color: #121212;
+  text-align: center;
 }
 
 .issue-list-item {
-  font-size: 14px;
+  font-size: 18px;
   padding: 12px;
-  margin-right: 16px;
   border-bottom: 1px solid black;
   background-color: #343a40;
   border-radius: 25px;
