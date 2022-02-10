@@ -21,26 +21,6 @@
     </ul>
   </div>
 
-  <div class="sidebar-container">
-    <div class="issue-container">
-      <h3>Recent Issues</h3>
-      <ul class="issue-list">
-        <% for (let i = 0; i < issues.length; i++){ %>
-          <li class="issue-list-item">
-            <p>Issue ID: <%= issues[i].issue_id %>
-            <a class="issue-list-link" href="/home/projects/issue_detail/<%=issues[i].issue_id%>">
-            <%= issues[i].issue_summary %>
-            </a></p>
-            <% if (issues[i].issue_status == "Open"){ %>
-            <p class="issue-status-open">Status: <%= issues[i].issue_status %></p>
-            <% } else { %>
-            <p class="issue-status-close">Status: <%= issues[i].issue_status %></p>
-            <% } %>
-          </li>
-          <br>
-        <% } %>
-      </ul>
-    </div>
-  </div>
+  <%- include("partials/sidebar"); %>
 
 </div>
