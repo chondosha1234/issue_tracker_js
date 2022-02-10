@@ -1,3 +1,29 @@
 <%- include("partials/base"); %>
 
+<link rel="stylesheet" href="/stylesheets/data_view.css" />
+
+<div class="body-container">
+
+  <div class="main-container">
+      <h2> <%= project.project_name %> </h2>
+      <br>
+      <p> <%= project.start_date %> </p>
+      <p> <%= project.target_end_date %> </p>
+      <p> <%= project.created_by %> </p>
+      <p> <%= project.created_on %> </p>
+      <br>
+      <h3> Issues for this project: </h3>
+      <% for (let i = 0; i < proj_issues.length; i++){ %>
+      <p> <%= proj_issues[i].issue_summary %> </p>
+      <p> <%= proj_issues[i].created_on %> </p>
+      <p> <%= proj_issues[i].created_by %> </p>
+      <p> <%= proj_issues[i].assigned_to %> </p>
+      <p> <%= proj_issues[i].target_date %> </p>
+      <p> <%= proj_issues[i].issue_status %> </p>
+      <br>
+      <% } %>
+
+  </div>
+
+
 <%- include("partials/sidebar"); %>

@@ -15,7 +15,7 @@ h2 {
   display: block;
   flex-wrap: wrap;
   text-align: center;
-  width: 100%;
+  width: 80%;
 }
 
 .home-info {
@@ -53,34 +53,4 @@ h2 {
 .create-link:hover {
   color: white;
   text-decoration: none;
-}
-
-.issue-list-item {
-  font-size: 14px;
-  padding: 12px;
-  margin-right: 16px;
-  border-bottom: 1px solid black;
-  background-color: #343a40;
-  border-radius: 25px;
-}
-
-.issue-list {
-  list-style-type: none;
-}
-
-.issue-list-link {
-  color: white;
-  font-size: 14px;
-}
-
-.issue-list-link:hover{
-  color: red;
-}
-
-.issue-status-open {
-  color: green;
-}
-
-.issue-status-closed {
-  color: red;
 }

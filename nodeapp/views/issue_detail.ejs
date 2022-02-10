@@ -1,0 +1,23 @@
+<%- include("partials/base"); %>
+
+<link rel="stylesheet" href="/stylesheets/data_view.css" />
+
+<div class="body-container">
+
+  <div class="main-container">
+      <h2> <%= issue.issue_summary %> </h2>
+      <br>
+      <p> Related Project ID: <%= issue.related_project %> </p>
+      <p> Currently assigned to: <%= issue.assigned_to %> </p>
+      <p> Status: <%= issue.issue_status %> --- <%= issue.priority %> </p>
+      <p> Target Date: <%= issue.target_date %> </p>
+      <p> Created By: <%= issue.created_by %> </p>
+      <p> Created On: <%= issue.created_on %> </p>
+      <br>
+      <p> Description: <%= issue.issue_description %> </p>
+
+  </div>
+
+  <%- include("partials/sidebar"); %>
+
+</div>

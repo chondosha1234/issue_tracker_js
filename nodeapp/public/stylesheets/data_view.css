@@ -30,31 +30,3 @@ h3 {
 .project-list-link:hover {
   color: black;
 }
-
-.issue-list {
-  list-style-type: none;
-}
-
-.issue-list-item {
-  background-color: #343a40;
-  padding: 12px;
-  margin-right: 12px;
-  border-radius: 25px;
-}
-
-.issue-list-link {
-  color: white;
-  font-size: 18px;
-}
-
-.issue-list-link:hover {
-  color: red;
-}
-
-.issue-status-open {
-  color: green;
-}
-
-.issue-status-closed {
-  color: red;
-}

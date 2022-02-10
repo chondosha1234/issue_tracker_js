@@ -32,9 +32,11 @@ module.exports = {
   project_detail:async function(req,res){
     const project = await project_model.getProjectById(req.params.id);
     const issues = await issue_model.showRecentIssues();
+    const proj_issues = await issue_model.getIssuesByProject(req.params.id);
     res.render("project_detail", {
       project: project,
-      issues: issues 
+      proj_issues: proj_issues,
+      issues: issues
     });
   },
 
@@ -70,8 +72,13 @@ module.exports = {
     });
   },
 
-  issue_detail:function(req,res){
-    res.render("issue_detail");
+  issue_detail:async function(req,res){
+    const issue = await issue_model.getIssue(req.params.id);
+    const issues = await issue_model.showRecentIssues();
+    res.render("issue_detail", {
+      issue: issue,
+      issues: issues
+    });
   },
 
   create_issue:function(req,res){

@@ -17,9 +17,9 @@ router.post('/home/projects/finish_project', function_controller.finishProject);
 
 router.get('/home/users', page_controller.users);
 router.get('/home/users/user_info/:username', page_controller.user_info);
- 
+
 router.get('/home/issues', page_controller.issues);
-router.get('/home/issues/issue_detail', page_controller.issue_detail);
+router.get('/home/issues/issue_detail/:id', page_controller.issue_detail);
 router.get('/home/issues/create_issue', page_controller.create_issue);
 router.post('/home/issues/create_issue', function_controller.createIssue);
 router.get('/home/issues/assign_issue', page_controller.assign_issue);

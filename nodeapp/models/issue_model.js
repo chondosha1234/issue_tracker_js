@@ -22,22 +22,41 @@ module.exports = {
   //retrieve info about issue for issue detail
   async getIssue(issue_id){
     return new Promise(async function(res, rej){
-    try {
-      conn = await pool.getConnection();
-      sql = "SELECT * FROM Issues WHERE issue_id = ?";
-      await conn.query(sql, [issue_id], function(err, results, fields){
-        if (results[0]){
-          res(results[0]);
-        }else {
-          console.log("Issue not found");
-          res(null);
-        }
-      });
-      conn.release();
-    }catch (err){
-      rej(err);
-    }
+      try {
+        conn = await pool.getConnection();
+        sql = "SELECT * FROM Issues WHERE issue_id = ?";
+        await conn.query(sql, [issue_id], function(err, results, fields){
+          if (results[0]){
+            res(results[0]);
+          }else {
+            console.log("Issue not found");
+            res(null);
+          }
+        });
+        conn.release();
+      }catch (err){
+        rej(err);
+      }
    });
+  },
+
+  async getIssuesByProject(project_id){
+    return new Promise(async function(res,rej){
+      try{
+        conn = await pool.getConnection();
+        sql = "SELECT * FROM Issues WHERE related_project = ?";
+        await conn.query(sql, [project_id], function(err, results, fields){
+          if (results){
+            res(results);
+          }else {
+            res(null);
+          }
+        });
+        conn.release();
+      }catch (err){
+        rej(err);
+      }
+    });
   },
 
   //Call when issue is finished, set it to closed and unassign user
