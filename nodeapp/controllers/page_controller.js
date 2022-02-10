@@ -31,8 +31,10 @@ module.exports = {
 
   project_detail:async function(req,res){
     const project = await project_model.getProjectById(req.params.id);
+    const issues = await issue_model.showRecentIssues();
     res.render("project_detail", {
-      project: project
+      project: project,
+      issues: issues 
     });
   },
 
