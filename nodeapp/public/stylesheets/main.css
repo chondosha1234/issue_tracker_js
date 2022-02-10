@@ -1,6 +1,5 @@
 h3 {
   margin: 8px;
-  margin-left: 20%;
   padding: 6px;
   background-color: #343a40;
   border-radius: 25px;
@@ -15,21 +14,26 @@ h2 {
 .main-container {
   display: block;
   flex-wrap: wrap;
+  text-align: center;
   width: 100%;
 }
 
 .home-info {
   margin: 16px;
-  margin-left: 5%;
+  font-size: 24px;
 }
 
 .home-issue-info {
   margin: 16px;
 }
 
+.home-user-info {
+  margin: 16px;
+  text-align: left;
+}
+
 .home-actions {
   margin: 20px;
-  margin-left: 20%;
 }
 
 .create-btn {
