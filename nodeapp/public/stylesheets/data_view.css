@@ -1,11 +1,9 @@
 h2 {
-  margin-left: 20%;
   padding: 6px;
   background-color: #343a40;
 }
 
 h3 {
-  margin-left: 20%;
   padding: 6px;
   background-color: #343a40;
   border-radius: 25px;
@@ -13,6 +11,8 @@ h3 {
 
 .project-list {
   list-style-type: none;
+  text-align: left;
+  font-size: 18px;
 }
 
 .project-list-item {
@@ -24,9 +24,63 @@ h3 {
 
 .project-list-link {
   color: white;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .project-list-link:hover {
   color: black;
+}
+
+
+
+.issue-list {
+  list-style-type: none;
+  text-align: left;
+}
+
+.issue-list-item {
+  background-color: #343a40;
+  padding: 12px;
+  margin-right: 12px;
+  border-radius: 25px;
+}
+
+.issue-list-link {
+  color: white;
+  font-size: 18px;
+}
+
+.issue-list-link:hover {
+  color: red;
+}
+
+.issue-status-open {
+  color: green;
+}
+
+.issue-status-closed {
+  color: red;
+}
+
+
+.user-list {
+  list-style-type: none;
+  text-align: left;
+}
+
+.user-list-item {
+
+}
+
+.user-info-link {
+  color: white;
+  font-size: 18px;
+}
+
+.user-info-link:hover{
+  color: red;
+}
+
+.user-date {
+
 }
