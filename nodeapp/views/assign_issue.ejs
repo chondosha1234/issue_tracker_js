@@ -1,0 +1,16 @@
+<%- include("partials/base"); %>
+
+<link rel="stylesheet" href="/stylesheets/data_entry.css" />
+
+<div class="center">
+  <h3>Enter Information to Assign User to Issue</h3>
+  <br>
+  <form method="POST" action="/home/issues/assign_issue">
+    <div class="form-group">
+      <input name="project_name" type="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
+      <input name="issue_id" type="issue_id" class="form-control" id="issue_id" placeholder="Issue ID" required>
+      <input name="username" type="username" class="form-control" id="username" placeholder="Username" required>
+    </div>
+    <button type="submit" class="create-btn">Assign Issue</button>
+  </form>
+</div>

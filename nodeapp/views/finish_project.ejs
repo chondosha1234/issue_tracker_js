@@ -1,0 +1,15 @@
+<%- include("partials/base"); %>
+
+<link rel="stylesheet" href="/stylesheets/data_entry.css" />
+
+<div class="center">
+  <h3>Enter Information for Finished Project</h3>
+  <br>
+  <form method="POST" action="/home/projects/finish_project">
+    <div class="form-group">
+      <input name="project_name" type="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
+      <input name="username" type="username" class="form-control" id="username" placeholder="Username" required>
+    </div>
+    <button type="submit" class="create-btn">Finish Project</button>
+  </form>
+</div>
