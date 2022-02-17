@@ -14,6 +14,21 @@ module.exports = {
     });
   },
 
+  login:function(req, res){
+    res.render("login");
+  },
+
+  register:function(req,res){
+    res.render("register");
+  },
+
+  logout:function(req, res){
+    //res.logOut();
+    res.render("login");
+  },
+
+//projects pages
+
   projects:async function(req,res){
     const projects = await project_model.showRecentProjects();
     const issues = await issue_model.showRecentIssues();
@@ -40,9 +55,45 @@ module.exports = {
     });
   },
 
+  show_all_issues_by_proj:function(req, res){
+    const proj_issues = await issue_model.showAllIssues(req.params.id);
+    const project = await project_model.getProjectById(req.params.id);
+    const issues = await issue_model.showRecentIssues();
+    res.render("project_detail", {
+      project: project,
+      proj_issues: proj_issues,
+      issues: issues
+    });
+  },
+
+  show_open_issues_by_proj:function(req, res){
+    const proj_issues = await issue_model.showOpenIssues(req.params.id);
+    const project = await project_model.getProjectById(req.params.id);
+    const issues = await issue_model.showRecentIssues();
+    res.render("project_detail", {
+      project: project,
+      proj_issues: proj_issues,
+      issues: issues
+    });
+  },
+
+  show_overdue_issues_by_proj:function(req, res){
+    const issues = await issue_model.showOverdueIssues(req.params.id);
+    const project = await project_model.getProjectById(req.params.id);
+    const issues = await issue_model.showRecentIssues();
+    res.render("project_detail", {
+      project: project,
+      proj_issues: proj_issues,
+      issues: issues
+    });
+  },
+
+
   finish_project: async function(req,res){
     res.render("finish_project");
   },
+
+//users pages
 
   users:async function(req,res){
     const users = await person_model.listUsers();
@@ -61,6 +112,9 @@ module.exports = {
       issues: issues
     });
   },
+
+
+//issues pages
 
   issues:async function(req,res){
     const issues = await issue_model.showRecentIssues();
@@ -97,25 +151,35 @@ module.exports = {
     res.render("assign_issue");
   },
 
+  show_all_issues_by_proj:function(req, res){
+    const issues = await issue_model.showAllIssues(req.body.project_id);
+    res.render("project_detail", {
+      issues: issues
+    });
+  },
+
+  show_open_issues_by_proj:function(req, res){
+    const issues = await issue_model.showOpenIssues(req.body.project_id);
+    res.render("project_detail", {
+      issues: issues
+    });
+  },
+
+  show_overdue_issues_by_proj:function(req, res){
+    const issues = await issue_model.showOverdueIssues(req.body.project_id);
+    res.render("project_detail", {
+      issues: issues
+    });
+  },
+
+//reports
+
   reports:function(req,res){
     res.render("reports");
   },
 
   dashboard:function(req,res){
     res.render("dashboard");
-  },
-
-  // just renders login page
-  login:function(req, res){
-    res.render("login");
-  },
-
-  register:function(req,res){
-    res.render("register");
-  },
-
-  logout:function(req, res){
-    //res.logOut();
-    res.render("login");
   }
+
 };

@@ -99,38 +99,35 @@ module.exports = {
     });
   },
 
-  getIssue:async function(req, res){
-    const issue = await issue_model.getIssue(req.body.issue_id);
-    res.send("issue_detail", {
-      issue: issue,
-    });
-  },
-
   assignIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
     const user = await person_model.getUser(req.body.person_id);
     person_model.assignIssue(user.username, issue.issue_id);
-    //maybe make this util
-    user_data = await person_model.getUser(req.session.username);
-    issues = await issue_model.showRecentIssues();
+    const issues = await issue_model.showRecentIssues();
     res.render("main", {
-      username: user_data.username,
-      email: user_data.email,
-      person_role: user_data.person_role,
-      assigned_issue: user_data.assign_issue,
-      created_on: user_data.created_on.toISOString().slice(0, 10).replace('T', ' '),
-      modified_on: user_data.modified_on.toISOString().slice(0, 10).replace('T', ' '),
+      user: user,
       issues: issues
     })
   },
 
   updateIssue:async function(req,res){
-    res.render("issues");
+    const issue_id = req.body.issue_id;
+    const project = req.body.project_name;
+    const description = req.body.description;
+    const progress = req.body.progress;
+    const priority = req.body.priority; // 3 radio button and maybe change button
+    const issues = await issue_model.showRecentIssues();
+    await issue_model.updateIssue(issue.issue_id, project, description, progress, priority);
+    const issue = await issue_model.getIssue(req.body.issue_id);
+    res.render("issue_detail", {
+      issue: issue,
+      issues: issues
+    });
   },
 
   closeIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
-    await issue_model.closeIssue(req.body.issue_id);
+    await issue_model.closeIssue(req.body.issue_id, req.body.resolution_summary);
     const project = await project_model.getProjectById(issue.related_project);
     const issues = await issue_model.showAllIssues(project.project_id);
     res.render("issues", {
