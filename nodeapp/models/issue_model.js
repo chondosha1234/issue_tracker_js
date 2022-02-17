@@ -1,5 +1,6 @@
 const pool = require("../utils/db.js");
 const person_model = require("./person_model");
+const projet_model = require("./project_model");
 
 module.exports = {
 
@@ -60,15 +61,25 @@ module.exports = {
   },
 
   //Call when issue is finished, set it to closed and unassign user
-  async closeIssue(issue_id){
+  async closeIssue(issue_id, resolution_summary){
     try {
       conn = await pool.getConnection();
-      sql = "UPDATE Issues SET issue_status = 'Closed' WHERE issue_id = ?";
-      await conn.query(sql, [issue_id], function(err, result, fields){
-        if (err){
-          console.log("Issue not closed properly");
-        }
-      });
+      if (resolution_summary){
+        sql = "UPDATE Issues SET issue_status = 'Closed' AND resolution_summary = ? WHERE issue_id = ?";
+        await conn.query(sql, [resolution_summary, issue_id], function(err, result, fields){
+          if (err){
+            console.log("Issue not closed properly");
+          }
+        });
+      }else {
+        sql = "UPDATE Issues SET issue_status = 'Closed' WHERE issue_id = ?";
+        await conn.query(sql, [issue_id], function(err, result, fields){
+          if (err){
+            console.log("Issue not closed properly");
+          }
+        });
+      }
+
       const issue = getIssue(issue_id);
       sql = "SELECT username FROM People WHERE person_id = ?";
       await conn.query(sql, [issue.assigned_to], async function(err, results, fields){
@@ -86,8 +97,79 @@ module.exports = {
 
   //edit an issue that is already created
   // need variable args?
-  async editIssue(){
+  async updateIssue(issue_id, project_name, description, progress, priority){
+    try{
+      const username = req.session.username;
+      const date = new Date().toISOString().slice(0, 10).replace("T", " ");
+      const project = project_model.getProjectByName(project_name);
+      if (project){
+        if (description){
+          await updateDescription(issue_id, description);
+        }
+        if (progress){
+          await updateProgress(issue_id, progress);
+        }
+        if (priority){
+          await changePriority(issue_id, priority);
+        }
+      }
+      conn = await pool.getConnection();
+      sql = "UPDATE Issues SET modified_on = ? AND modified_by = ? WHERE issue_id = ?";
+      await conn.query(sql, [date, user, issue_id], function(err, results, fields){
+        if (err){
+          console.log("error updating modified");
+        }
+      });
+      conn.release();
+    }catch(err){
+      throw(err);
+    }
+  },
 
+  // add a long description to issue
+  async updateDescription(issue_id, description){
+    try{
+      conn = await pool.getConnection();
+        sql = "UPDATE Issues SET description = ? WHERE issue_id = ?";
+        await conn.query(sql, [description, issue_id], function(err, results, fields){
+          if (err){
+            console.log("Error with query");
+          }
+        });
+      conn.release();
+    }catch(err){
+      throw(err);
+    }
+  },
+
+  async updateProgress(issue_id, progress){
+    try{
+      conn = await pool.getConnection();
+      sql = "UPDATE Issues SET progress = ? WHERE issue_id = ?";
+      await conn.query(sql, [progress, issue_id], function(err, results, fields){
+        if (err){
+          console.log("Error with query");
+        }
+      });
+      conn.release();
+    }catch (err){
+      throw(err);
+    }
+  },
+
+  async changePriority(issue_id, priority){
+    try{
+      conn = await pool.getConnection();
+      sql = "UPDATE Issues SET priority = ? WHERE issue_id = ?";
+      await conn.query(sql, [priority, issue_id], function(err, results, fields){
+        if (err){
+          console.log("Error with query");
+        }
+      });
+      conn.release();
+    }catch (err){
+      throw(err);
+    }
   },
 
   //get all issues to show from a project
