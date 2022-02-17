@@ -55,7 +55,7 @@ module.exports = {
     });
   },
 
-  show_all_issues_by_proj:function(req, res){
+  show_all_issues_by_proj:async function(req, res){
     const proj_issues = await issue_model.showAllIssues(req.params.id);
     const project = await project_model.getProjectById(req.params.id);
     const issues = await issue_model.showRecentIssues();
@@ -66,7 +66,7 @@ module.exports = {
     });
   },
 
-  show_open_issues_by_proj:function(req, res){
+  show_open_issues_by_proj:async function(req, res){
     const proj_issues = await issue_model.showOpenIssues(req.params.id);
     const project = await project_model.getProjectById(req.params.id);
     const issues = await issue_model.showRecentIssues();
@@ -77,8 +77,8 @@ module.exports = {
     });
   },
 
-  show_overdue_issues_by_proj:function(req, res){
-    const issues = await issue_model.showOverdueIssues(req.params.id);
+  show_overdue_issues_by_proj:async function(req, res){
+    const proj_issues = await issue_model.showOverdueIssues(req.params.id);
     const project = await project_model.getProjectById(req.params.id);
     const issues = await issue_model.showRecentIssues();
     res.render("project_detail", {
@@ -149,27 +149,6 @@ module.exports = {
 
   assign_issue:function(req,res){
     res.render("assign_issue");
-  },
-
-  show_all_issues_by_proj:function(req, res){
-    const issues = await issue_model.showAllIssues(req.body.project_id);
-    res.render("project_detail", {
-      issues: issues
-    });
-  },
-
-  show_open_issues_by_proj:function(req, res){
-    const issues = await issue_model.showOpenIssues(req.body.project_id);
-    res.render("project_detail", {
-      issues: issues
-    });
-  },
-
-  show_overdue_issues_by_proj:function(req, res){
-    const issues = await issue_model.showOverdueIssues(req.body.project_id);
-    res.render("project_detail", {
-      issues: issues
-    });
   },
 
 //reports
