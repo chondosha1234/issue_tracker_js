@@ -61,7 +61,7 @@ module.exports = {
       });
       conn.release();
     } catch (err){
-      return rej(err);
+      rej(err);
     }
    });
   },
@@ -87,8 +87,11 @@ module.exports = {
       conn = await pool.getConnection();
       sql = "UPDATE People SET assigned_issue = ? WHERE username = ?";
       await conn.query(sql, [issue_id, username]);
+      sql = "UPDATE Issues SET assigned_to = 0 WHERE issue_id = ?";
+      await conn.query(sql, [issue_id]);
+      const user = getUser(username);
       conn.release();
-      if (issue_id === 0){
+      if (user.assigned_issue === 0){
         console.log("User: " + username + "now is unassigned.");
       }else {
         console.log("User: " + username + " now assigned to project: " + issue_id);
