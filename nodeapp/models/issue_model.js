@@ -1,18 +1,66 @@
 const pool = require("../utils/db.js");
 const person_model = require("./person_model");
-const projet_model = require("./project_model");
+const project_model = require("./project_model");
+
+
+// add a long description to issue
+async function updateDescription(issue_id, description){
+  try{
+    conn = await pool.getConnection();
+      sql = "UPDATE Issues SET description = ? WHERE issue_id = ?";
+      await conn.query(sql, [description, issue_id], function(err, results, fields){
+        if (err){
+          console.log("Error with query");
+        }
+      });
+    conn.release();
+  }catch(err){
+    throw(err);
+  }
+}
+
+async function updateProgress(issue_id, progress){
+  try{
+    conn = await pool.getConnection();
+    sql = "UPDATE Issues SET progress = ? WHERE issue_id = ?";
+    await conn.query(sql, [progress, issue_id], function(err, results, fields){
+      if (err){
+        console.log("Error with query");
+      }
+    });
+    conn.release();
+  }catch (err){
+    throw(err);
+  }
+}
+
+async function changePriority(issue_id, priority){
+  try{
+    conn = await pool.getConnection();
+    sql = "UPDATE Issues SET priority = ? WHERE issue_id = ?";
+    await conn.query(sql, [priority, issue_id], function(err, results, fields){
+      if (err){
+        console.log("Error with query");
+      }
+    });
+    conn.release();
+  }catch (err){
+    throw(err);
+  }
+}
+
 
 module.exports = {
 
   //create new issue
   //username passed as argument, or maybe query it here
-  async createIssue(username, summary, person_id, id_date, project_id, status){
+  async createIssue(username, summary, person_id, assigned_to, id_date, project_id, status){
     try {
       conn = await pool.getConnection();
       let date = new Date().toISOString().slice(0, 10).replace("T", " ");
-      sql = "INSERT INTO Issues (issue_summary, identified_by_person_id, identified_date, related_project, issue_status, created_on, created_by, modified_on, modified_by)";
-      sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      await conn.query(sql, [summary, person_id, id_date, project_id, status, date, username, date, username]);
+      sql = "INSERT INTO Issues (issue_summary, identified_by_person_id, identified_date, related_project, assigned_to, issue_status, created_on, created_by, modified_on, modified_by)";
+      sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      await conn.query(sql, [summary, person_id, id_date, project_id, assigned_to, status, date, username, date, username]);
       conn.release();
       console.log("Issue created by: " + username);
     }catch (err) {
@@ -97,11 +145,10 @@ module.exports = {
 
   //edit an issue that is already created
   // need variable args?
-  async updateIssue(issue_id, project_name, description, progress, priority){
+  async updateIssue(issue_id, project_name, username, description, progress, priority){
     try{
-      const username = req.session.username;
       const date = new Date().toISOString().slice(0, 10).replace("T", " ");
-      const project = project_model.getProjectByName(project_name);
+      const project = await project_model.getProjectByName(project_name);
       if (project){
         if (description){
           await updateDescription(issue_id, description);
@@ -115,7 +162,7 @@ module.exports = {
       }
       conn = await pool.getConnection();
       sql = "UPDATE Issues SET modified_on = ? AND modified_by = ? WHERE issue_id = ?";
-      await conn.query(sql, [date, user, issue_id], function(err, results, fields){
+      await conn.query(sql, [date, username, issue_id], function(err, results, fields){
         if (err){
           console.log("error updating modified");
         }

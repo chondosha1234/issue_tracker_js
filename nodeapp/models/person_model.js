@@ -1,31 +1,33 @@
 const pool = require("../utils/db.js");
 const auth = require("../utils/auth.js");
 
+async function getUser(username){
+  return new Promise(async function(res, rej){
+  try {
+    conn = await pool.getConnection();
+    sql = "SELECT * FROM People WHERE username = ?";
+    await conn.query(sql, [username], function(err, results, fields){
+      if (err){
+        console.err(err.message);
+      }else {
+        if(results.length == 1){
+          res(results[0]);
+        }else {
+          res(null);
+        }
+      }
+    });
+   conn.release();
+  }catch (err){
+    rej(err);
+  }
+ });
+}
+
 module.exports = {
 
   //get info about one user
-  async getUser(username){
-    return new Promise(async function(res, rej){
-    try {
-      conn = await pool.getConnection();
-      sql = "SELECT * FROM People WHERE username = ?";
-      await conn.query(sql, [username], function(err, results, fields){
-        if (err){
-          console.err(err.message);
-        }else {
-          if(results.length == 1){
-            res(results[0]);
-          }else {
-            res(null);
-          }
-        }
-      });
-     conn.release();
-    }catch (err){
-      rej(err);
-    }
-   });
-  },
+  getUser: getUser,
 
   //list all users
   async listUsers(){
@@ -82,19 +84,23 @@ module.exports = {
   },
 
   //assign project to user
-  async assignIssue(username, issue_id){
+  async assignIssue(username, issue, project){
     try {
       conn = await pool.getConnection();
-      sql = "UPDATE People SET assigned_issue = ? WHERE username = ?";
-      await conn.query(sql, [issue_id, username]);
-      sql = "UPDATE Issues SET assigned_to = 0 WHERE issue_id = ?";
-      await conn.query(sql, [issue_id]);
-      const user = getUser(username);
+      if (project.project_id === issue.related_project){
+        sql = "UPDATE People SET assigned_issue = ? WHERE username = ?";
+        await conn.query(sql, [issue.issue_id, username]);
+        sql = "UPDATE Issues SET assigned_to = ? WHERE issue_id = ?";
+        await conn.query(sql, [username, issue.issue_id]);
+        const user = getUser(username);
+      }else {
+        console.log("Project doesnt exist");
+      }
       conn.release();
       if (user.assigned_issue === 0){
         console.log("User: " + username + "now is unassigned.");
       }else {
-        console.log("User: " + username + " now assigned to project: " + issue_id);
+        console.log("User: " + username + " now assigned to project: " + issue.issue_id);
       }
     }catch (err){
       throw err;
