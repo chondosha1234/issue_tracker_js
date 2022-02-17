@@ -1,11 +1,12 @@
 <%- include("partials/base"); %>
 
 <link rel="stylesheet" href="/stylesheets/data_entry.css" />
+<script src="/javascripts/radio.js"></script>
 
 <div class="center-test">
   <h3>Enter Information to Update Issue</h3>
   <br>
-  <form method="POST" action="/register">
+  <form method="POST" action="/home/issues/update_issue">
     <div class="form-group">
       <input name="username" type="username" class="form-control" id="username" placeholder="Username" required>
       <input name="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
@@ -15,19 +16,19 @@
 
       <label class="form-radio">Change Priority?</label>
       <div class="priority-select">
-        <input name="priority" type="radio" class="form-radio" id="priority-yes" value="YES">
+        <input name="priority" type="radio" class="form-radio" id="priority-yes" onclick="priorityClick(this);" value="YES">
         <label for="priority-yes" class="form-radio">Yes</label>
-        <input name="priority" type="radio" class="form-radio" id="priority-no" value="NO">
+        <input name="priority" type="radio" class="form-radio" id="priority-no" onclick="priorityClick(this);" value="NO">
         <label for="priority-no" class="form-radio">No</label>
       </div>
       <br>
       <div class="priority-buttons">
         <input name="priority" type="radio" class="form-radio" id="low" value="Low">
-        <label for="low" class="form-radio">Low</label>
+        <label for="low" class="form-radio" id="low-label">Low</label>
         <input name="priority" type="radio" class="form-radio" id="medium" value="Medium">
-        <label for="medium" class="form-radio">Medium</label>
+        <label for="medium" class="form-radio" id="medium-label">Medium</label>
         <input name="priority" type="radio" class="form-radio" id="high" value="High">
-        <label for="high" class="form-radio">High</label>
+        <label for="high" class="form-radio" id="high-label">High</label>
       </div>
     </div>
     <button type="submit" class="create-btn">Update</button>
