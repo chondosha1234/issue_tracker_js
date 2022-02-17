@@ -13,15 +13,25 @@
       <p> <%= project.created_on %> </p>
       <br>
       <h3> Issues for this project: </h3>
-      <% for (let i = 0; i < proj_issues.length; i++){ %>
-      <p> <%= proj_issues[i].issue_summary %> </p>
-      <p> <%= proj_issues[i].created_on %> </p>
-      <p> <%= proj_issues[i].created_by %> </p>
-      <p> <%= proj_issues[i].assigned_to %> </p>
-      <p> <%= proj_issues[i].target_date %> </p>
-      <p> <%= proj_issues[i].issue_status %> </p>
       <br>
-      <% } %>
+      <ul class="issue-list">
+        <% for (let i = 0; i < issues.length; i++){ %>
+          <li class="issue-list-item">
+            <p>
+            Issue ID: <%= issues[i].issue_id %>
+            <a class="issue-list-link" href="/home/issues/issue_detail/<%=issues[i].issue_id%>">
+            <%= issues[i].issue_summary %>
+            </a>
+            Status: <%= issues[i].issue_status %>
+            </p>
+            <p> <%= proj_issues[i].assigned_to %> </p>
+            <p> <%= proj_issues[i].target_date %> </p>
+            <p class="issue-list-date">Created On: <%= issues[i].created_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+            <p class="issue-list-date">Modified On: <%= issues[i].modified_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+          </li>
+          <br>
+        <% } %>
+      </ul>
 
   </div>
 
