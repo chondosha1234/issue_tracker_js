@@ -2,15 +2,33 @@
 
 <link rel="stylesheet" href="/stylesheets/data_entry.css" />
 
-<div class="center">
+<div class="center-test">
   <h3>Enter Information to Update Issue</h3>
   <br>
   <form method="POST" action="/register">
     <div class="form-group">
-      <input name="name" type="name" class="form-control" id="name" placeholder="Name" required>
       <input name="username" type="username" class="form-control" id="username" placeholder="Username" required>
-      <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
-      <input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
+      <input name="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
+      <input name="issue_id" class="form-control" id="issue_id" placeholder="Issue ID" required>
+      <textarea name="description" class="form-control" id="description" rows="4" cols="21">Issue Description</textarea>
+      <textarea name="progress" class="form-control" id="progress" rows="3" cols="21">Progress...</textarea>
+
+      <label class="form-radio">Change Priority?</label>
+      <div class="priority-select">
+        <input name="priority" type="radio" class="form-radio" id="priority-yes" value="YES">
+        <label for="priority-yes" class="form-radio">Yes</label>
+        <input name="priority" type="radio" class="form-radio" id="priority-no" value="NO">
+        <label for="priority-no" class="form-radio">No</label>
+      </div>
+      <br>
+      <div class="priority-buttons">
+        <input name="priority" type="radio" class="form-radio" id="low" value="Low">
+        <label for="low" class="form-radio">Low</label>
+        <input name="priority" type="radio" class="form-radio" id="medium" value="Medium">
+        <label for="medium" class="form-radio">Medium</label>
+        <input name="priority" type="radio" class="form-radio" id="high" value="High">
+        <label for="high" class="form-radio">High</label>
+      </div>
     </div>
     <button type="submit" class="create-btn">Update</button>
   </form>
