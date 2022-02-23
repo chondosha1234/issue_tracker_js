@@ -88,7 +88,8 @@ module.exports = {
     const user = await person_model.getUser(username);
     const person_id = user.person_id;
     const status = "Open";
-    issue_model.createIssue(username, summary, person_id, id_date, project_id, status);
+    const assigned_to = null;
+    issue_model.createIssue(username, summary, person_id, assigned_to, id_date, project_id, status);
 
     const issues = await issue_model.showAllIssues(project_id);
     const projects = await project_model.showRecentProjects();
@@ -101,8 +102,9 @@ module.exports = {
 
   assignIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
-    const user = await person_model.getUser(req.body.person_id);
-    person_model.assignIssue(user.username, issue.issue_id);
+    const user = await person_model.getUser(req.body.username);
+    const project = await project_model.getProjectByName(req.body.project_name);
+    person_model.assignIssue(user.username, issue, project);
     const issues = await issue_model.showRecentIssues();
     res.render("main", {
       user: user,
@@ -112,12 +114,13 @@ module.exports = {
 
   updateIssue:async function(req,res){
     const issue_id = req.body.issue_id;
-    const project = req.body.project_name;
+    const project_name = req.body.project_name;
+    const username = req.body.username;
     const description = req.body.description;
     const progress = req.body.progress;
     const priority = req.body.priority; // 3 radio button and maybe change button
     const issues = await issue_model.showRecentIssues();
-    await issue_model.updateIssue(issue.issue_id, project, description, progress, priority);
+    await issue_model.updateIssue(issue_id, project_name, username, description, progress, priority);
     const issue = await issue_model.getIssue(req.body.issue_id);
     res.render("issue_detail", {
       issue: issue,
@@ -127,7 +130,7 @@ module.exports = {
 
   closeIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
-    await issue_model.closeIssue(req.body.issue_id, req.body.resolution_summary);
+    await issue_model.closeIssue(req.body.issue_id, req.body.username, req.body.resolution_summary);
     const project = await project_model.getProjectById(issue.related_project);
     const issues = await issue_model.showAllIssues(project.project_id);
     res.render("issues", {

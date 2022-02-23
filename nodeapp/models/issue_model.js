@@ -2,17 +2,36 @@ const pool = require("../utils/db.js");
 const person_model = require("./person_model");
 const project_model = require("./project_model");
 
+async function getIssue(issue_id){
+  return new Promise(async function(res, rej){
+    try {
+      conn = await pool.getConnection();
+      sql = "SELECT * FROM Issues WHERE issue_id = ?";
+      await conn.query(sql, [issue_id], function(err, results, fields){
+        if (results[0]){
+          res(results[0]);
+        }else {
+          console.log("Issue not found");
+          res(null);
+        }
+      });
+      conn.release();
+    }catch (err){
+      rej(err);
+    }
+ });
+}
 
 // add a long description to issue
 async function updateDescription(issue_id, description){
   try{
     conn = await pool.getConnection();
-      sql = "UPDATE Issues SET description = ? WHERE issue_id = ?";
-      await conn.query(sql, [description, issue_id], function(err, results, fields){
-        if (err){
-          console.log("Error with query");
-        }
-      });
+    sql_desc = "UPDATE Issues SET issue_description = ? WHERE issue_id = ?";
+    await conn.query(sql_desc, [description, issue_id], function(err, results, fields){
+      if (err){
+        console.log("Error with query");
+      }
+    });
     conn.release();
   }catch(err){
     throw(err);
@@ -22,8 +41,8 @@ async function updateDescription(issue_id, description){
 async function updateProgress(issue_id, progress){
   try{
     conn = await pool.getConnection();
-    sql = "UPDATE Issues SET progress = ? WHERE issue_id = ?";
-    await conn.query(sql, [progress, issue_id], function(err, results, fields){
+    sql_progress = "UPDATE Issues SET progress = ? WHERE issue_id = ?";
+    await conn.query(sql_progress, [progress, issue_id], function(err, results, fields){
       if (err){
         console.log("Error with query");
       }
@@ -37,8 +56,8 @@ async function updateProgress(issue_id, progress){
 async function changePriority(issue_id, priority){
   try{
     conn = await pool.getConnection();
-    sql = "UPDATE Issues SET priority = ? WHERE issue_id = ?";
-    await conn.query(sql, [priority, issue_id], function(err, results, fields){
+    sql_prio = "UPDATE Issues SET priority = ? WHERE issue_id = ?";
+    await conn.query(sql_prio, [priority, issue_id], function(err, results, fields){
       if (err){
         console.log("Error with query");
       }
@@ -68,26 +87,7 @@ module.exports = {
     }
   },
 
-  //retrieve info about issue for issue detail
-  async getIssue(issue_id){
-    return new Promise(async function(res, rej){
-      try {
-        conn = await pool.getConnection();
-        sql = "SELECT * FROM Issues WHERE issue_id = ?";
-        await conn.query(sql, [issue_id], function(err, results, fields){
-          if (results[0]){
-            res(results[0]);
-          }else {
-            console.log("Issue not found");
-            res(null);
-          }
-        });
-        conn.release();
-      }catch (err){
-        rej(err);
-      }
-   });
-  },
+  getIssue: getIssue,
 
   async getIssuesByProject(project_id){
     return new Promise(async function(res,rej){
@@ -109,11 +109,11 @@ module.exports = {
   },
 
   //Call when issue is finished, set it to closed and unassign user
-  async closeIssue(issue_id, resolution_summary){
+  async closeIssue(issue_id, username, resolution_summary){
     try {
       conn = await pool.getConnection();
       if (resolution_summary){
-        sql = "UPDATE Issues SET issue_status = 'Closed' AND resolution_summary = ? WHERE issue_id = ?";
+        sql = "UPDATE Issues SET issue_status = 'Closed', resolution_summary = ? WHERE issue_id = ?";
         await conn.query(sql, [resolution_summary, issue_id], function(err, result, fields){
           if (err){
             console.log("Issue not closed properly");
@@ -127,7 +127,13 @@ module.exports = {
           }
         });
       }
-
+      try {
+        await person_model.assignIssue(username, 0);
+        console.log("unassign worked");
+      }catch (err){
+        console.log("error unassigning");
+      }
+      /*
       const issue = getIssue(issue_id);
       sql = "SELECT username FROM People WHERE person_id = ?";
       await conn.query(sql, [issue.assigned_to], async function(err, results, fields){
@@ -137,6 +143,7 @@ module.exports = {
           console.log("Error unassigning person from issue");
         }
       });
+      */
       conn.release();
     }catch (err){
       throw err;
@@ -161,7 +168,7 @@ module.exports = {
         }
       }
       conn = await pool.getConnection();
-      sql = "UPDATE Issues SET modified_on = ? AND modified_by = ? WHERE issue_id = ?";
+      sql = "UPDATE Issues SET modified_on = ?, modified_by = ? WHERE issue_id = ?";
       await conn.query(sql, [date, username, issue_id], function(err, results, fields){
         if (err){
           console.log("error updating modified");
@@ -169,52 +176,6 @@ module.exports = {
       });
       conn.release();
     }catch(err){
-      throw(err);
-    }
-  },
-
-  // add a long description to issue
-  async updateDescription(issue_id, description){
-    try{
-      conn = await pool.getConnection();
-        sql = "UPDATE Issues SET description = ? WHERE issue_id = ?";
-        await conn.query(sql, [description, issue_id], function(err, results, fields){
-          if (err){
-            console.log("Error with query");
-          }
-        });
-      conn.release();
-    }catch(err){
-      throw(err);
-    }
-  },
-
-  async updateProgress(issue_id, progress){
-    try{
-      conn = await pool.getConnection();
-      sql = "UPDATE Issues SET progress = ? WHERE issue_id = ?";
-      await conn.query(sql, [progress, issue_id], function(err, results, fields){
-        if (err){
-          console.log("Error with query");
-        }
-      });
-      conn.release();
-    }catch (err){
-      throw(err);
-    }
-  },
-
-  async changePriority(issue_id, priority){
-    try{
-      conn = await pool.getConnection();
-      sql = "UPDATE Issues SET priority = ? WHERE issue_id = ?";
-      await conn.query(sql, [priority, issue_id], function(err, results, fields){
-        if (err){
-          console.log("Error with query");
-        }
-      });
-      conn.release();
-    }catch (err){
       throw(err);
     }
   },
