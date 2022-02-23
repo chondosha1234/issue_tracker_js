@@ -7,27 +7,31 @@
   <div class="main-container">
       <h2> <%= project.project_name %> </h2>
       <br>
-      <p> <%= project.start_date %> </p>
-      <p> <%= project.target_end_date %> </p>
-      <p> <%= project.created_by %> </p>
-      <p> <%= project.created_on %> </p>
+      <p> Start Date: <%= project.start_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+      <p> Target End Date: <%= project.target_end_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+      <p> Created by: <%= project.created_by %> </p>
+      <p> Created On: <%= project.created_on.toISOString().slice(0, 10).replace('T', ' ') %> </p>
       <br>
       <h3> Issues for this project: </h3>
       <br>
       <ul class="issue-list">
-        <% for (let i = 0; i < issues.length; i++){ %>
+        <% for (let i = 0; i < proj_issues.length; i++){ %>
           <li class="issue-list-item">
             <p>
-            Issue ID: <%= issues[i].issue_id %>
-            <a class="issue-list-link" href="/home/issues/issue_detail/<%=issues[i].issue_id%>">
-            <%= issues[i].issue_summary %>
+            Issue ID: <%= proj_issues[i].issue_id %>
+            <a class="issue-list-link" href="/home/issues/issue_detail/<%=proj_issues[i].issue_id%>">
+            <%= proj_issues[i].issue_summary %>
             </a>
-            Status: <%= issues[i].issue_status %>
+            <% if (proj_issues[i].issue_status === "Open") { %>
+              <p class="issue-status-open">Status: <%= proj_issues[i].issue_status %>
+            <% } else { %>
+              <p class="issue-status-closed">Status: <%= proj_issues[i].issue_status %>
+            <% } %>
             </p>
-            <p> <%= proj_issues[i].assigned_to %> </p>
+            <p> Assigned to: <%= proj_issues[i].assigned_to %> </p>
             <p> <%= proj_issues[i].target_date %> </p>
-            <p class="issue-list-date">Created On: <%= issues[i].created_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
-            <p class="issue-list-date">Modified On: <%= issues[i].modified_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+            <p class="issue-list-date">Created On: <%= proj_issues[i].created_on.toISOString().slice(0, 10).replace('T', ' ') %></p>
+            <p class="issue-list-date">Modified On: <%= proj_issues[i].modified_on %></p>
           </li>
           <br>
         <% } %>
