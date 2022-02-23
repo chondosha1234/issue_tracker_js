@@ -13,9 +13,13 @@
       <p> Status: <%= issue.issue_status %> --- <%= issue.priority %> </p>
       <p> Target Date: <%= issue.target_date %> </p>
       <p> Created By: <%= issue.created_by %> </p>
-      <p> Created On: <%= issue.created_on %> </p>
+      <p> Created On: <%= issue.created_on.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+      <p> Modified By: <%= issue.modified_by %> </p>
+      <p> Modified On: <%= issue.modified_on.toISOString().slice(0, 10).replace('T', ' ') %> </p>
       <br>
       <p> Description: <%= issue.issue_description %> </p>
+      <br>
+      <p> Progress : <%= issue.progress %> </p>
 
   </div>
 
