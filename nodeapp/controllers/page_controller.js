@@ -147,6 +147,10 @@ module.exports = {
     res.render("update_issue");
   },
 
+  search_issue: function(req,res){
+    res.render("search_issue");
+  },
+
   assign_issue:function(req,res){
     res.render("assign_issue");
   },
@@ -159,6 +163,6 @@ module.exports = {
 
   dashboard:function(req,res){
     res.render("dashboard");
-  }
+  },
 
 };
