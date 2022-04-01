@@ -2,6 +2,7 @@ const session = require("express-session");
 const passport = require("passport");  // built in auth ?
 const userModel = require("../models/person_model");
 const pool = require("./db.js");
+const project_model = require("../models/project_model");
 
 module.exports = {
 
@@ -76,6 +77,46 @@ module.exports = {
            res(true);
          }
        });
+     }catch (err){
+       rej(err);
+     }
+   });
+ },
+
+ async authIssue(project_name, issue_id, username){
+   return new Promise(async function(res, rej){
+     try{
+       const project = await project_model.getProjectByName(project_name);
+       conn = await pool.getConnection();
+       sql = "SELECT * FROM People WHERE username = ?";
+       await conn.query(sql, [username], function(err, results, fields){
+         if (!results[0]){
+           console.log("error with username");
+         }else {
+           console.log("username found");
+         }
+       });
+
+       sql = "SELECT * FROM Projects WHERE project_name = ?";
+       await conn.query(sql, [project_name], function(err, results, fields){
+         if (!results[0]){
+           console.log("error with project name");
+         }else{
+           console.log("project found");
+         }
+       });
+
+       sql = "SELECT * FROM Issues WHERE issue_id = ? AND related_project = ?";
+       await conn.query(sql, [issue_id, project.project_id], function(err, results, fields){
+         if (!results[0]){
+           console.log("error with issue id or related project");
+         }else{
+           console.log("issue found " + issue_id);
+           res(results[0]);
+         }
+       });
+       conn.release();
+
      }catch (err){
        rej(err);
      }
