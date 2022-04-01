@@ -1,29 +1,41 @@
 <%- include("partials/base"); %>
 
+
 <link rel="stylesheet" href="/stylesheets/data_entry.css" />
 <script src="/javascripts/update_issue.js"></script>
 
-<div class="center-test">
+  <div class="center-test">
+    <h3>Search Issue</h3>
+    <br>
+    <form method="POST">
+      <div class="form-group">
+        <input name="username" class="form-control" id="username" placeholder="<%= username %>" required>
+        <input name="project_name" class="form-control" id="project_name" placeholder="<%= project_name %>" required>
+        <input name="issue_id" class="form-control" id="issue_id" placeholder="<%= issue.issue_id %>" required>
+        <button type="submit" class="search-btn" id="search-btn">Search</button>
+      </div>
+    </form>
+    <br>
+
   <h3>Enter Information to Update Issue</h3>
   <br>
+  <h4>Issue Summary</h4>
+  <p> <%= issue.issue_summary %> </p>
+  <br>
+  
   <form method="POST" action="/home/issues/update_issue">
     <div class="form-group">
-      <input name="username" class="form-control" id="username" placeholder="Username" required>
-      <input name="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
-      <input name="issue_id" class="form-control" id="issue_id" placeholder="Issue ID" required>
-      <button class="search-btn" type="button" onclick="searchIssue();">Search</button>
+      <label class="form-radio" id="description-label">Description</label>
+      <textarea name="description" class="form-control" id="description" rows="4" cols="21"><%= issue.issue_description %></textarea>
+      <label class="form-radio" id="progress-label">Progress</label>
+      <textarea name="progress" class="form-control" id="progress" rows="3" cols="21"><%= issue.progress %></textarea>
 
-      <label class="form-radio" id="description-label" style="display:none;">Description</label>
-      <textarea name="description" class="form-control" id="description" rows="4" cols="21" style="display:none;"></textarea>
-      <label class="form-radio" id="progress-label" style="display:none;">Progress</label>
-      <textarea name="progress" class="form-control" id="progress" rows="3" cols="21" style="display:none;"></textarea>
-
-      <label class="form-radio" id="change-priority-label" style="display:none;">Change Priority?</label>
+      <label class="form-radio" id="change-priority-label">Change Priority?</label>
       <div class="priority-select">
-        <input name="priority" type="radio" class="form-radio" id="priority-yes" onclick="priorityClick(this);" value="YES" style="display:none;">
-        <label for="priority-yes" class="form-radio" id="priority-yes-label" style="display:none;">Yes</label>
-        <input name="priority" type="radio" class="form-radio" id="priority-no" onclick="priorityClick(this);" value="NO" style="display:none;">
-        <label for="priority-no" class="form-radio" id="priority-no-label" style="display:none;">No</label>
+        <input name="priority" type="radio" class="form-radio" id="priority-yes" onclick="priorityClick(this);" value="YES">
+        <label for="priority-yes" class="form-radio" id="priority-yes-label">Yes</label>
+        <input name="priority" type="radio" class="form-radio" id="priority-no" onclick="priorityClick(this);" value="NO">
+        <label for="priority-no" class="form-radio" id="priority-no-label">No</label>
       </div>
       <br>
       <div class="priority-buttons">
@@ -35,6 +47,9 @@
         <label for="high" class="form-radio" id="high-label" style="display:none;">High</label>
       </div>
     </div>
+
+    <input name="hidden_username" id="hidden_username" value="<%= username %>" style="display:none;">
+    <input name="hidden_issue_id" id="hidden_issue_id" value="<%= issue.issue_id %>" style="display:none;">
     <button type="submit" class="create-btn">Update</button>
   </form>
 </div>
