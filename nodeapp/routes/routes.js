@@ -24,6 +24,8 @@ router.get('/home/issues/create_issue', page_controller.create_issue);
 router.post('/home/issues/create_issue', function_controller.createIssue);
 router.get('/home/issues/assign_issue', page_controller.assign_issue);
 router.post('/home/issues/assign_issue', function_controller.assignIssue);    //check to see if works
+router.get('/home/issues/search_issue', page_controller.search_issue);
+router.post('/home/issues/search_issue', function_controller.searchIssue);
 router.get('/home/issues/update_issue', page_controller.update_issue);
 router.post('/home/issues/update_issue', function_controller.updateIssue);
 router.get('/home/issues/close_issue', page_controller.close_issue);
@@ -37,5 +39,7 @@ router.get('/home/dashboard', page_controller.dashboard);
 
 router.get('/register', page_controller.register);
 router.post('/register', function_controller.createPerson);
+
+router.get('/test_button', page_controller.test_button);
 
 module.exports = router;
