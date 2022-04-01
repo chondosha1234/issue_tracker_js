@@ -33,6 +33,8 @@ h3 {
 
 
 
+
+
 .issue-list {
   list-style-type: none;
   text-align: left;
@@ -61,6 +63,8 @@ h3 {
 .issue-status-closed {
   color: red;
 }
+
+
 
 
 .user-list {
