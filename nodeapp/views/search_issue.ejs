@@ -1,0 +1,16 @@
+<%- include("partials/base"); %>
+
+<link rel="stylesheet" href="/stylesheets/data_entry.css" />
+<script src="/javascripts/update_issue.js"></script>
+
+<div class="center-test">
+  <h3>Search Issue</h3>
+  <br>
+  <form id="search-form" method="POST" action="/home/issues/search_issue">
+    <div class="form-group">
+      <input name="username" class="form-control" id="username" placeholder="Username" required>
+      <input name="project_name" class="form-control" id="project_name" placeholder="Project Name" required>
+      <input name="issue_id" class="form-control" id="issue_id" placeholder="Issue ID" required>
+      <button type="submit" class="search-btn" id="search-btn">Search</button>
+    </div>
+  </form>

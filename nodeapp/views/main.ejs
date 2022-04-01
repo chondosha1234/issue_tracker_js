@@ -23,25 +23,32 @@
     <br>
 
     <div class="home-actions">
-      <button class="create-btn">
-        <a class="create-link" href="/home/projects/create_project">Create Project</a>
-      </button>
-      <button class="create-btn">
-        <a class="create-link" href="/home/issues/create_issue">Create Issue</a>
-      </button>
-      <button class="create-btn">
-        <a class="create-link" href="/home/issues/update_issue">Update Current Issue</a>
-      </button>
+      <a class="create-link" href="/home/projects/create_project">
+        <button class="create-btn">Create Project</button>
+      </a>
+
+      <a class="create-link" href="/home/issues/create_issue">
+        <button class="create-btn">Create Issue</button>
+      </a>
+  
+      <a class="create-link" href="/home/issues/search_issue">
+        <button class="create-btn">Update Current Issue</button>
+      </a>
+
       <% if (user.person_role == "Admin") { %>
-      <button class="create-btn">
-        <a class="create-link" href="/home/issues/assign_issue">Assign Issue</a>
-      </button>
-      <button class="create-btn">
-        <a class="create-link" href="/home/issues/close_issue">Close Issue</a>
-      </button>
-      <button class="create-btn">
-        <a class="create-link" href="/home/projects/finish_project">Finish Project</a>
-      </button>
+
+      <a class="create-link" href="/home/issues/assign_issue">
+        <button class="create-btn">Assign Issue</button>
+      </a>
+
+      <a class="create-link" href="/home/issues/close_issue">
+        <button class="create-btn">Close Issue</button>
+      </a>
+
+      <a class="create-link" href="/home/projects/finish_project">
+        <button class="create-btn">Finish Project</button>
+      </a>
+
       <% } %>
     </div>
   </div>
