@@ -100,6 +100,18 @@ module.exports = {
     });
   },
 
+  searchIssue:async function(req,res){
+    const issue_id = req.body.issue_id;
+    const project_name = req.body.project_name;
+    const username = req.body.username;
+    const issue = await auth.authIssue(project_name, issue_id, username);
+    res.render("update_issue", {
+      issue: issue,
+      project_name: project_name,
+      username: username
+    });
+  },
+
   assignIssue:async function(req,res){
     const issue = await issue_model.getIssue(req.body.issue_id);
     const user = await person_model.getUser(req.body.username);
@@ -109,19 +121,18 @@ module.exports = {
     res.render("main", {
       user: user,
       issues: issues
-    })
+    });
   },
 
   updateIssue:async function(req,res){
-    const issue_id = req.body.issue_id;
-    const project_name = req.body.project_name;
-    const username = req.body.username;
+    const issue_id = req.body.hidden_issue_id;
+    const username = req.body.hidden_username;
     const description = req.body.description;
     const progress = req.body.progress;
     const priority = req.body.priority; // 3 radio button and maybe change button
     const issues = await issue_model.showRecentIssues();
-    await issue_model.updateIssue(issue_id, project_name, username, description, progress, priority);
-    const issue = await issue_model.getIssue(req.body.issue_id);
+    await issue_model.updateIssue(issue_id, username, description, progress, priority);
+    const issue = await issue_model.getIssue(issue_id);
     res.render("issue_detail", {
       issue: issue,
       issues: issues
@@ -136,7 +147,7 @@ module.exports = {
     res.render("issues", {
       issues: issues,
       project: project
-    })
+    });
   },
 
   showAllIssues:async function(req,res){
