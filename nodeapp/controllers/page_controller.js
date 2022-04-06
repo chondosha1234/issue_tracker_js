@@ -77,6 +77,17 @@ module.exports = {
     });
   },
 
+  show_closed_issues_by_proj:async function(req, res){
+    const proj_issues = await issue_model.showClosedIssues(req.params.id);
+    const project = await project_model.getProjectById(req.params.id);
+    const issues = await issue_model.showRecentIssues();
+    res.render("project_detail", {
+      project: project,
+      proj_issues: proj_issues,
+      issues: issues
+    });
+  },
+
   show_overdue_issues_by_proj:async function(req, res){
     const proj_issues = await issue_model.showOverdueIssues(req.params.id);
     const project = await project_model.getProjectById(req.params.id);
