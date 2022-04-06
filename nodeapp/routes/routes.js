@@ -12,6 +12,10 @@ router.get('/home/projects', page_controller.projects);
 router.get('/home/projects/create_project', page_controller.create_project);
 router.post('/home/projects', function_controller.createProject);
 router.get('/home/projects/project_detail/:id', page_controller.project_detail);
+router.get('/home/projects/project_detail/:id/open_issues', page_controller.show_open_issues_by_proj);
+router.get('/home/projects/project_detail/:id/overdue_issues', page_controller.show_overdue_issues_by_proj);
+router.get('/home/projects/project_detail/:id/all_issues', page_controller.show_all_issues_by_proj);
+router.get('/home/projects/project_detail/:id/closed_issues', page_controller.show_closed_issues_by_proj);
 router.get('/home/projects/finish_project', page_controller.finish_project);
 router.post('/home/projects/finish_project', function_controller.finishProject);
 
@@ -39,7 +43,5 @@ router.get('/home/dashboard', page_controller.dashboard);
 
 router.get('/register', page_controller.register);
 router.post('/register', function_controller.createPerson);
-
-router.get('/test_button', page_controller.test_button);
 
 module.exports = router;
