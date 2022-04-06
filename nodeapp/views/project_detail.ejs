@@ -7,10 +7,29 @@
   <div class="main-container">
       <h2> <%= project.project_name %> </h2>
       <br>
-      <p> Start Date: <%= project.start_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
-      <p> Target End Date: <%= project.target_end_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
-      <p> Created by: <%= project.created_by %> </p>
-      <p> Created On: <%= project.created_on.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+      <div class="project-info">
+        <div class="project-dates">
+          <p> Start Date: <%= project.start_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+          <p> Target End Date: <%= project.target_end_date.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+          <p> Created by: <%= project.created_by %> </p>
+          <p> Created On: <%= project.created_on.toISOString().slice(0, 10).replace('T', ' ') %> </p>
+        </div>
+        <div class="project-buttons">
+          <a href="/home/projects/project_detail/<%= project.project_id %>/open_issues">
+            <button class="issue-buttons">Open Issues</button>
+          </a>
+          <a href="/home/projects/project_detail/<%= project.project_id %>/overdue_issues">
+            <button class="issue-buttons">Overdue Issues</button>
+          </a>
+          <a href="/home/projects/project_detail/<%= project.project_id %>/all_issues">
+            <button class="issue-buttons">All Issues</button>
+          </a>
+          <a href="/home/projects/project_detail/<%= project.project_id %>/closed_issues">
+            <button class="issue-buttons">Closed Issues</button>
+          </a>
+        </div>
+      </div>
+
       <br>
       <h3> Issues for this project: </h3>
       <br>
