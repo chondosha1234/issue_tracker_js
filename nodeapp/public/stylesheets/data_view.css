@@ -88,3 +88,32 @@ h3 {
 .user-date {
 
 }
+
+
+.project-info {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.project-dates {
+  margin-right: 24px;
+}
+
+.project-buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  margin-left: 24px;
+}
+
+.issue-buttons {
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  margin: 10px;
+}
+
+.issue-buttons:hover {
+  background-color: black;
+}
